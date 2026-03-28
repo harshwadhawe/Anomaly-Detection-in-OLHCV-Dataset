@@ -1,0 +1,9 @@
+venv/
+CLAUDE.md
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+*.egg-info/
+.ipynb_checkpoints/
+*.csv.lock
