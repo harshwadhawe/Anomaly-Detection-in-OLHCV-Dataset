@@ -1,7 +1,8 @@
 alert_id,sec_id,trade_date,time_window_start,anomaly_type,severity,remarks,time_to_run
-1,33008,2026-02-18,09:00:00,abnormal_spread_bps,HIGH,sec_id=33008: bid/ask spread elevated vs baseline (max spread z≈60.0) starting 09:00:00.,0.437
-2,33382,2026-02-20,09:00:00,abnormal_spread_bps,HIGH,sec_id=33382: bid/ask spread elevated vs baseline (max spread z≈60.0) starting 09:00:00.,0.437
-3,550091,2026-02-18,10:32:58,cancel_burst_no_price_impact,HIGH,sec_id=550091: 8 CANCELLED equity orders from same trader_id within ~12 mins starting 10:32; spoofing signature.,0.437
-4,551023,2026-02-17,12:24:00,order_book_imbalance_sustained,HIGH,sec_id=551023: heavy volume detected in deeper order book levels (2-5) starting 12:24:00. Indicates potential layering.,0.437
-5,34926,2026-02-19,09:01:00,order_book_imbalance_sustained,HIGH,sec_id=34926: heavy volume detected in deeper order book levels (2-5) starting 09:01:00. Indicates potential layering.,0.437
-6,3752951,2026-02-17,11:53:00,bid_depth_level01_concentration,HIGH,sec_id=3752951: level-01 size dominates book (>99% total depth) from 11:53:00 — spoofing concentration.,0.437
+1,33008,2026-02-18,09:00:00,abnormal_spread_bps,HIGH,sec_id=33008: bid/ask spread elevated vs baseline (max spread z≈60.0) starting 09:00:00.,0.464
+2,33382,2026-02-20,09:00:00,abnormal_spread_bps,HIGH,sec_id=33382: bid/ask spread elevated vs baseline (max spread z≈60.0) starting 09:00:00.,0.464
+3,550091,2026-02-18,10:32:58,cancel_burst_no_price_impact,HIGH,sec_id=550091: 8 CANCELLED equity orders from same trader_id within ~12 mins starting 10:32; spoofing signature.,0.464
+4,551023,2026-02-17,12:24:00,order_book_imbalance_sustained,HIGH,sec_id=551023: heavy volume detected in deeper order book levels (2-5) starting 12:24:00. Indicates potential layering.,0.464
+5,34926,2026-02-19,09:01:00,order_book_imbalance_sustained,HIGH,sec_id=34926: heavy volume detected in deeper order book levels (2-5) starting 09:01:00. Indicates potential layering.,0.464
+6,3752951,2026-02-17,11:53:00,bid_depth_level01_concentration,HIGH,sec_id=3752951: level-01 size dominates book (>99% total depth) from 11:53:00 — spoofing concentration.,0.464
+7,43205,2026-02-19,09:43:00,bid_depth_level01_concentration,HIGH,sec_id=43205: level-01 size dominates book (>99% total depth) from 09:43:00 — spoofing concentration.,0.464

@@ -224,8 +224,9 @@ def main() -> None:
             diverse_alerts.append(row)
             seen_kinds[kind] = seen_kinds.get(kind, 0) + 1
 
-    # Cap total alerts at 7 to limit FP exposure
-    diverse_alerts = diverse_alerts[:7]
+    # RELAXED CAP: Allow the diversity grid to breathe. 
+    # If the math proves they are HIGH severity, submit them.
+    diverse_alerts = diverse_alerts[:15]
 
     alerts = []
     for sec_id, td, wstart, kind, score, max_obi, extra in diverse_alerts:
