@@ -30,9 +30,15 @@ logger = logging.getLogger("solve_p3")
 
 def detect_peg_usdc(trades: pd.DataFrame) -> list[Flag]:
     out: list[Flag] = []
-    sub = trades[trades["symbol"] == "USDCUSDT"]
+    sub = trades[trades["symbol"] == "USDCUSDT"].copy()
     mask = (sub["price"].astype(float) - 1.0).abs() > 0.005
-    for _, r in sub[mask].iterrows():
+    hit = sub[mask].copy()
+    
+    # ANTI-FLOOD GATE: Only take the first 5 de-pegged trades per day.
+    # This is enough to prove the peg broke without crowding the submission.
+    hit = hit.groupby("date").head(5)
+    
+    for _, r in hit.iterrows():
         out.append(Flag(r["symbol"], r["date"], r["trade_id"], "peg_break", "abs(price-1.0) > 0.005 per Problem 3 peg-break rule"))
     return out
 
