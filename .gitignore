@@ -7,8 +7,6 @@ __pycache__/
 .ipynb_checkpoints/
 *.csv.lock
 
-# Data files (provided by organizers)
-student-pack/
 
 # Internal analysis artifacts
 raw.csv
