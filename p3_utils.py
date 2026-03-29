@@ -255,12 +255,14 @@ def trim_submission(
 
     d = d.sort_values(["_pri", "event_id", "trade_id"], kind="mergesort")
 
-    # 1. DYNAMIC INTRA-EVENT CAP (Stop amputating massive True Positive rings)
+# 1. DYNAMIC INTRA-EVENT CAP (Stop amputating massive True Positive rings)
     def get_max_rows_per_event(vtype):
         if vtype in ["placement_smurfing", "aml_structuring", "coordinated_structuring"]:
-            return 50  # Let structural rings breathe (capture all legs of the smurf)
+            return 50  # Let structural rings breathe 
+        elif vtype == "peg_break":
+            return 4   # We only need a few rows to prove a peg break, don't flood the CSV
         elif vtype in ["pump_and_dump", "cross_pair_divergence", "layering_echo", "coordinated_pump"]:
-            return 8   # Strangle heuristic cascades (limit FP blast radius)
+            return 8   # Strangle heuristic cascades 
         else:
             return 12  # Default for ramping, spoofing (top K), wash pairs
 

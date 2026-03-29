@@ -132,8 +132,11 @@ def detect_usdc_wash_volume_at_peg(trades: pd.DataFrame) -> list[Flag]:
 def detect_aml_structuring(trades: pd.DataFrame) -> list[Flag]:
     in_band = (trades["notional"] >= AML_STRUCT_BAND_LO) & (trades["notional"] <= AML_STRUCT_BAND_HI)
     n_in_band = trades.assign(_in_band=in_band).groupby(["symbol", "wallet", "date"], sort=False)["_in_band"].transform("sum")
-    hit = trades.loc[in_band & (n_in_band >= 2), ["symbol", "date", "trade_id"]]
-    return [Flag(str(sym), str(d), str(tid), "aml_structuring", "2+ trades with notional in smurfing band same wallet/day") for sym, d, tid in zip(hit["symbol"], hit["date"], hit["trade_id"])]
+    
+    # STRICTER GATE: Raised from >= 2 to >= 4 to eliminate BTC/ETH natural noise
+    hit = trades.loc[in_band & (n_in_band >= 4), ["symbol", "date", "trade_id"]]
+    
+    return [Flag(str(sym), str(d), str(tid), "aml_structuring", "4+ trades with notional in smurfing band same wallet/day") for sym, d, tid in zip(hit["symbol"], hit["date"], hit["trade_id"])]
 
 def detect_coordinated_structuring(trades: pd.DataFrame) -> list[Flag]:
     in_band = (trades["notional"] >= AML_STRUCT_BAND_LO) & (trades["notional"] <= AML_STRUCT_BAND_HI)
@@ -211,8 +214,17 @@ def detect_layering_echo(trades: pd.DataFrame) -> list[Flag]:
             g = g.set_index("timestamp").sort_index()
             roll = g["signed_notional"]
             rg, rn = roll.abs().rolling("480s", min_periods=6).sum(), roll.rolling("480s", min_periods=6).sum()
-            for _, r in g[((rg > 5000) & (rn.abs() < 0.08 * rg)).fillna(False)].reset_index().iterrows():
-                out.append(Flag(sym, r["date"], r["trade_id"], "layering_echo", "8m rolling: gross large, net small vs gross"))
+            
+            # NEW: Calculate price push (max - min) in the 8m window
+            p_max = g["price"].astype(float).rolling("480s", min_periods=6).max()
+            p_min = g["price"].astype(float).rolling("480s", min_periods=6).min()
+            price_push_bps = (p_max - p_min) / g["price"].astype(float)
+            
+            # GATE: Must have high volume, zero net, AND push the price > 20 bps (0.002)
+            mask = (rg > 5000) & (rn.abs() < 0.08 * rg) & (price_push_bps > 0.002)
+            
+            for _, r in g[mask.fillna(False)].reset_index().iterrows():
+                out.append(Flag(sym, r["date"], r["trade_id"], "layering_echo", "8m rolling: massive gross, zero net, WITH >20bps price push"))
     return out
 
 def detect_pump_dump(trades: pd.DataFrame, market: dict[str, pd.DataFrame]) -> list[Flag]:

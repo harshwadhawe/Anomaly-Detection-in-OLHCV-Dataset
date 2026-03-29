@@ -70,8 +70,6 @@ BATUSDT,2026-02-09,BATUSDT_00000524,aml_structuring,BATUSDT hourly notional 33 v
 BATUSDT,2026-02-09,BATUSDT_00000525,aml_structuring,BATUSDT hourly notional 12 vs median (98.3x)
 BATUSDT,2026-02-16,BATUSDT_00000526,aml_structuring,BATUSDT hourly notional 100 vs median (198.2x)
 BATUSDT,2026-02-16,BATUSDT_00000527,aml_structuring,BATUSDT hourly notional 100 vs median (198.2x)
-BTCUSDT,2026-02-01,BTCUSDT_00001505,aml_structuring,2+ trades with notional in smurfing band same wallet/day
-BTCUSDT,2026-02-01,BTCUSDT_00004582,aml_structuring,2+ trades with notional in smurfing band same wallet/day
 BTCUSDT,2026-01-05,BTCUSDT_00003115,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-01-05,BTCUSDT_00003351,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-01-05,BTCUSDT_00003592,round_trip_wash,Greedy high-notional reciprocal pair within 5m
