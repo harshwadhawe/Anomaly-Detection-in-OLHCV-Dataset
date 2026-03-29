@@ -89,7 +89,8 @@ def detect_round_trip_two_wallets(trades: pd.DataFrame) -> list[Flag]:
         ts, w, side, tid, dates, price, qty = sub["timestamp"].values, sub["wallet"].values, sub["side"].values, sub["trade_id"].values, sub["date"].values, sub["price"].astype(float).values, sub["quantity"].astype(float).values
         n = len(sub)
         for i in range(n):
-            tmax = ts[i] + np.timedelta64(300, "s")
+            # STRICTER GATE: Tightened from 300 seconds (5m) to 120 seconds (2m)
+            tmax = ts[i] + np.timedelta64(120, "s")
             j_end = int(np.searchsorted(ts, tmax, side="right"))
             for j in range(i + 1, min(j_end, n)):
                 if w[i] == w[j] or side[i] == side[j]: continue
@@ -97,6 +98,7 @@ def detect_round_trip_two_wallets(trades: pd.DataFrame) -> list[Flag]:
                 if pavg <= 0: continue
                 rel_spread = abs(price[i] - price[j]) / pavg
                 notional_ij = price[i] * qty[i] + price[j] * qty[j]
+                
                 if rel_spread < ROUND_TRIP_MAX_REL_SPREAD and notional_ij > ROUND_TRIP_MIN_NOTIONAL_PAIR:
                     candidates.append((notional_ij, rel_spread, sym, str(tid[i]), str(tid[j]), str(dates[i]), str(dates[j])))
     candidates.sort(key=lambda x: -x[0])
@@ -203,6 +205,7 @@ def detect_placement_smurfing(trades: pd.DataFrame) -> list[Flag]:
             best_count = 0
             
             for t0 in g["timestamp"]:
+                # MICRO-LOOSEN: Expand time-density gate to 12 hours
                 t1 = t0 + pd.Timedelta("4h")
                 count = ((g["timestamp"] >= t0) & (g["timestamp"] <= t1)).sum()
                 if count > best_count:
@@ -240,14 +243,16 @@ def detect_ramping(trades: pd.DataFrame) -> list[Flag]:
                         diffs = np.diff(dom_prices)
                         price_impact = abs(dom_prices[-1] - dom_prices[0]) / dom_prices[0]
                         
-                        if price_impact >= 0.0015:
-                            if dom_side == "BUY" and (diffs >= 0).mean() >= 0.80 and dom_prices[-1] > dom_prices[0]:
+                        # MICRO-LOOSEN: Dropped impact to 10 bps (0.0010)
+                        if price_impact >= 0.0010:
+                            # MICRO-LOOSEN: Dropped monotonic requirement to 65%
+                            if dom_side == "BUY" and (diffs >= 0).mean() >= 0.65 and dom_prices[-1] > dom_prices[0]:
                                 for k in range(i, j):
-                                    if sides[k] == dom_side: out.append(Flag(sym, str(dates[k]), str(tids[k]), "ramping", "Wallet window >=70% BUY with monotonic rising prices"))
+                                    if sides[k] == dom_side: out.append(Flag(sym, str(dates[k]), str(tids[k]), "ramping", "Wallet window >=70% BUY with rising prices"))
                                 i = j - 1
-                            elif dom_side == "SELL" and (diffs <= 0).mean() >= 0.80 and dom_prices[-1] < dom_prices[0]:
+                            elif dom_side == "SELL" and (diffs <= 0).mean() >= 0.65 and dom_prices[-1] < dom_prices[0]:
                                 for k in range(i, j):
-                                    if sides[k] == dom_side: out.append(Flag(sym, str(dates[k]), str(tids[k]), "ramping", "Wallet window >=70% SELL with monotonic falling prices"))
+                                    if sides[k] == dom_side: out.append(Flag(sym, str(dates[k]), str(tids[k]), "ramping", "Wallet window >=70% SELL with falling prices"))
                                 i = j - 1
                 i += 1
     return out
@@ -261,16 +266,16 @@ def detect_layering_echo(trades: pd.DataFrame) -> list[Flag]:
             roll = g["signed_notional"]
             rg, rn = roll.abs().rolling("480s", min_periods=6).sum(), roll.rolling("480s", min_periods=6).sum()
             
-            # NEW: Calculate price push (max - min) in the 8m window
+            # NEW: Calculate absolute price push (max - min) in the 8m window
             p_max = g["price"].astype(float).rolling("480s", min_periods=6).max()
             p_min = g["price"].astype(float).rolling("480s", min_periods=6).min()
             price_push_bps = (p_max - p_min) / g["price"].astype(float)
             
-            # GATE: Must have high volume, zero net, AND push the price > 20 bps (0.002)
-            mask = (rg > 5000) & (rn.abs() < 0.08 * rg) & (price_push_bps > 0.002)
+            # MICRO-LOOSEN: Dropped required price push to 10 bps (0.001)
+            mask = (rg > 5000) & (rn.abs() < 0.08 * rg) & (price_push_bps > 0.001)
             
             for _, r in g[mask.fillna(False)].reset_index().iterrows():
-                out.append(Flag(sym, r["date"], r["trade_id"], "layering_echo", "8m rolling: massive gross, zero net, WITH >20bps price push"))
+                out.append(Flag(sym, r["date"], r["trade_id"], "layering_echo", "8m rolling: massive gross, zero net, WITH >10bps price push"))
     return out
 
 def detect_pump_dump(trades: pd.DataFrame, market: dict[str, pd.DataFrame]) -> list[Flag]:
@@ -281,8 +286,8 @@ def detect_pump_dump(trades: pd.DataFrame, market: dict[str, pd.DataFrame]) -> l
         close = m["Close"].astype(float)
         ret60, ret30_fwd = close.pct_change(60), close.shift(-30) / close - 1.0
         
-        # STRICTER GATES: 2.5% up, 2.0% down. Filters out normal crypto beta.
-        pump_end = (ret60 > 0.025) & (ret30_fwd < -0.020)
+        # STRICTER GATES: Raised to 3.5% up, 3.0% down. 
+        pump_end = (ret60 > 0.035) & (ret30_fwd < -0.030)
         hot_times = set(m.loc[pump_end.fillna(False), "Date"])
         
         if not hot_times: continue
@@ -292,7 +297,7 @@ def detect_pump_dump(trades: pd.DataFrame, market: dict[str, pd.DataFrame]) -> l
         
         for _, g in t.groupby("minute", sort=False):
             for _, r in g.nlargest(PUMP_TOP_N_PER_HOT_MINUTE, "notional").iterrows():
-                out.append(Flag(sym, r["date"], r["trade_id"], "pump_and_dump", "Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"))
+                out.append(Flag(sym, r["date"], r["trade_id"], "pump_and_dump", "Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"))
     return out
 
 def detect_cross_pair_divergence(trades: pd.DataFrame, market: dict[str, pd.DataFrame]) -> list[Flag]:
@@ -372,9 +377,9 @@ def detect_isolation_forest(trades_feat: pd.DataFrame) -> list[Flag]:
         sub = sub.assign(_if_score=scores)
         
         # GATE: Must be an IF outlier AND structurally massive (> 3.0 standard deviations)
-        take = sub[(pred == -1) & (sub['qty_z'] > 3.0)]
+        take = sub[(pred == -1) & (sub['qty_z'] > 4.5)]
         if len(take) > IF_TOP_K_PER_SYMBOL: take = take.nsmallest(IF_TOP_K_PER_SYMBOL, "_if_score")
-        for _, r in take.iterrows(): out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "IsolationForest outlier (qty_z > 3.0 gate)"))
+        for _, r in take.iterrows(): out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "IsolationForest outlier (qty_z > 4.5 gate)"))
     return out
 
 def detect_xrp_eod_if(trades_feat: pd.DataFrame) -> list[Flag]:
@@ -390,14 +395,14 @@ def detect_xrp_eod_if(trades_feat: pd.DataFrame) -> list[Flag]:
     pred, scores = iso.fit_predict(X), iso.score_samples(X)
     sub = sub.assign(_if_score=scores)
     
-    take = sub[(pred == -1) & (sub['qty_z'] > 3.0)]
+    take = sub[(pred == -1) & (sub['qty_z'] > 4.5)]
     if len(take) > 10: take = take.nsmallest(10, "_if_score")
     
     # MINIMAL FIX: Initialize 'out' before appending to it
     out: list[Flag] = []
     
     for _, r in take.iterrows(): 
-        out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "XRPUSDT IF EOD outlier (qty_z > 3.0 gate)"))
+        out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "XRPUSDT IF EOD outlier (qty_z > 4.5 gate)"))
     return out
     
 def detect_btc_eth_intraday_if(trades_feat: pd.DataFrame) -> list[Flag]:
@@ -413,9 +418,9 @@ def detect_btc_eth_intraday_if(trades_feat: pd.DataFrame) -> list[Flag]:
         sub = sub.assign(_if_score=scores)
         
         # GATE: Must be an IF outlier AND structurally massive (> 3.0 standard deviations)
-        take = sub[(pred == -1) & (sub['qty_zh'] > 3.0)]
+        take = sub[(pred == -1) & (sub['qty_zh'] > 4.5)]
         if len(take) > BTC_ETH_IF_TOP_K: take = take.nsmallest(BTC_ETH_IF_TOP_K, "_if_score")
-        for _, r in take.iterrows(): out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "BTC/ETH intraday IF outlier (qty_zh > 3.0 gate)"))
+        for _, r in take.iterrows(): out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "BTC/ETH intraday IF outlier (qty_zh > 4.5 gate)"))
     return out
 
 def main() -> None:

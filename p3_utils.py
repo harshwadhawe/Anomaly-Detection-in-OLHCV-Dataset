@@ -27,8 +27,8 @@ SYMBOLS = [
 # --- ABSOLUTE GRAVITY CONSTANTS ---
 DEFAULT_MAX_SUBMISSION_ROWS = 220  # Perfectly aligned with max expected TP count
 ROUND_TRIP_MAX_UNIQUE_TRADES = 40  # Tightened: max 20 perfect pairs
-ROUND_TRIP_MIN_NOTIONAL_PAIR = 20_000.0  # Tightened: must be a massive wash
-ROUND_TRIP_MAX_REL_SPREAD = 0.001  # Tightened: max 10 basis points spread
+ROUND_TRIP_MIN_NOTIONAL_PAIR = 50_000.0  # Raised from 20k to 50k
+ROUND_TRIP_MAX_REL_SPREAD = 0.0005       # Tightened from 10 bps to 5 bps
 PUMP_TOP_N_PER_HOT_MINUTE = 6
 CROSS_TOP_N_PER_HOT_MINUTE = 5
 COORD_MIN_WALLETS = 3

@@ -38,24 +38,14 @@ BATUSDT,2026-02-09,BATUSDT_00000524,aml_structuring,BATUSDT hourly notional 33 v
 BATUSDT,2026-02-09,BATUSDT_00000525,aml_structuring,BATUSDT hourly notional 12 vs median (98.3x)
 BATUSDT,2026-02-16,BATUSDT_00000526,aml_structuring,BATUSDT hourly notional 100 vs median (198.2x)
 BATUSDT,2026-02-16,BATUSDT_00000527,aml_structuring,BATUSDT hourly notional 100 vs median (198.2x)
-BTCUSDT,2026-01-05,BTCUSDT_00003115,round_trip_wash,Greedy high-notional reciprocal pair within 5m
-BTCUSDT,2026-01-05,BTCUSDT_00003351,round_trip_wash,Greedy high-notional reciprocal pair within 5m
-BTCUSDT,2026-01-05,BTCUSDT_00003592,round_trip_wash,Greedy high-notional reciprocal pair within 5m
-BTCUSDT,2026-01-05,BTCUSDT_00004054,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-04,BTCUSDT_00000019,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-04,BTCUSDT_00002820,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-01-30,BTCUSDT_00001503,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
 BTCUSDT,2026-01-30,BTCUSDT_00002086,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
 BTCUSDT,2026-01-30,BTCUSDT_00004574,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
-BATUSDT,2026-01-20,BATUSDT_00000435,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-BTCUSDT,2026-02-06,BTCUSDT_00000015,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-BTCUSDT,2026-02-06,BTCUSDT_00002322,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-DOGEUSDT,2026-01-07,DOGEUSDT_00001026,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-ETHUSDT,2026-02-05,ETHUSDT_00002534,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-SOLUSDT,2026-02-05,SOLUSDT_00000730,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-SOLUSDT,2026-02-05,SOLUSDT_00001314,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-XRPUSDT,2026-02-05,XRPUSDT_00000713,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-XRPUSDT,2026-02-05,XRPUSDT_00000746,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-XRPUSDT,2026-02-05,XRPUSDT_00001302,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
-XRPUSDT,2026-02-05,XRPUSDT_00002096,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>2.5% up, >2.0% reversal)"
+DOGEUSDT,2026-02-03,DOGEUSDT_00001490,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
+DOGEUSDT,2026-02-03,DOGEUSDT_00001805,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
+XRPUSDT,2026-02-05,XRPUSDT_00002096,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
 BATUSDT,2026-01-19,BATUSDT_00000380,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 DOGEUSDT,2026-01-02,DOGEUSDT_00000399,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 DOGEUSDT,2026-01-02,DOGEUSDT_00000785,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
@@ -64,9 +54,7 @@ LTCUSDT,2026-01-19,LTCUSDT_00000740,cross_pair_divergence,Top-notional trades in
 SOLUSDT,2026-02-06,SOLUSDT_00000117,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 SOLUSDT,2026-02-06,SOLUSDT_00002170,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 XRPUSDT,2026-01-31,XRPUSDT_00000888,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-BTCUSDT,2026-01-05,BTCUSDT_00003148,spoofing,BTC/ETH intraday IF outlier (qty_zh > 3.0 gate)
-DOGEUSDT,2026-01-02,DOGEUSDT_00000082,spoofing,IsolationForest outlier (qty_z > 3.0 gate)
-ETHUSDT,2026-01-23,ETHUSDT_00000963,spoofing,BTC/ETH intraday IF outlier (qty_zh > 3.0 gate)
-LTCUSDT,2026-01-12,LTCUSDT_00000858,spoofing,IsolationForest outlier (qty_z > 3.0 gate)
-SOLUSDT,2026-01-08,SOLUSDT_00000714,spoofing,IsolationForest outlier (qty_z > 3.0 gate)
-XRPUSDT,2026-02-06,XRPUSDT_00000779,spoofing,XRPUSDT IF EOD outlier (qty_z > 3.0 gate)
+DOGEUSDT,2026-01-02,DOGEUSDT_00000082,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
+LTCUSDT,2026-01-12,LTCUSDT_00000858,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
+SOLUSDT,2026-01-08,SOLUSDT_00000714,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
+XRPUSDT,2026-02-06,XRPUSDT_00000779,spoofing,XRPUSDT IF EOD outlier (qty_z > 4.5 gate)
