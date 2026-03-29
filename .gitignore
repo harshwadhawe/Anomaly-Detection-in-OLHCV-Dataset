@@ -1,5 +1,4 @@
 venv/
-CLAUDE.md
 __pycache__/
 *.pyc
 *.pyo
@@ -7,3 +6,10 @@ __pycache__/
 *.egg-info/
 .ipynb_checkpoints/
 *.csv.lock
+
+# Data files (provided by organizers)
+student-pack/
+
+# Internal analysis artifacts
+raw.csv
+CLAUDE.md
