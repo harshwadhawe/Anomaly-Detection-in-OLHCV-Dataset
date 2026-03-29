@@ -257,14 +257,22 @@ def trim_submission(
 
 # 1. DYNAMIC INTRA-EVENT CAP (Stop amputating massive True Positive rings)
     def get_max_rows_per_event(vtype):
-        if vtype in ["placement_smurfing", "aml_structuring", "coordinated_structuring"]:
-            return 50  # Let structural rings breathe 
+        if vtype in ["placement_smurfing"]:
+            return 50
+        elif vtype in ["aml_structuring", "coordinated_structuring"]:
+            return 4   # 3 events × 4 rows = 12 max per type
+        elif vtype in ["round_trip_wash"]:
+            return 2   # Pairs: 2 trade_ids per event
+        elif vtype in ["coordinated_pump"]:
+            return 2   # 3 events × 2 rows = 6 max
+        elif vtype in ["cross_pair_divergence"]:
+            return 1   # 1 per symbol-date event
+        elif vtype in ["pump_and_dump"]:
+            return 2   # Keep tight
         elif vtype == "peg_break":
-            return 4   # We only need a few rows to prove a peg break, don't flood the CSV
-        elif vtype in ["pump_and_dump", "cross_pair_divergence", "layering_echo", "coordinated_pump"]:
-            return 8   # Strangle heuristic cascades 
+            return 4
         else:
-            return 12  # Default for ramping, spoofing (top K), wash pairs
+            return 6   # Default
 
     d['allowed_rows'] = d['violation_type'].apply(get_max_rows_per_event)
     
@@ -274,13 +282,21 @@ def trim_submission(
 
     # 2. DYNAMIC SPAMMER CAP (Events per Coin)
     def get_max_events(vtype):
-        if vtype in ["peg_break", "aml_structuring", "ramping", "chain_layering", 
+        if vtype in ["peg_break", "aml_structuring", "ramping", "chain_layering",
                      "placement_smurfing", "threshold_testing", "wash_volume_at_peg"]:
             return 3  # High Confidence
-        elif vtype in ["manager_consolidation", "wash_trading", "round_trip_wash"]:
-            return 1  # Medium Confidence
+        elif vtype in ["round_trip_wash"]:
+            return 10  # 10 date-events × 2 rows = 20 max
+        elif vtype in ["coordinated_structuring", "coordinated_pump"]:
+            return 3   # 3 date-events each
+        elif vtype in ["pump_and_dump"]:
+            return 3  # Distinct date events
+        elif vtype in ["manager_consolidation", "wash_trading"]:
+            return 2  # Medium Confidence
+        elif vtype in ["cross_pair_divergence"]:
+            return 1  # 1 event per coin
         else:
-            return 1  # Low Confidence (ML/Heuristics)
+            return 1  # Low Confidence
 
     events_in_order = d[['sym_type', 'event_id', 'violation_type']].drop_duplicates()
     events_in_order['allowed_events'] = events_in_order['violation_type'].apply(get_max_events)

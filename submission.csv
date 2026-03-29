@@ -6,9 +6,15 @@ BTCUSDT,2026-02-05,BTCUSDT_00000735,coordinated_structuring,≥3 wallets and ≥
 BTCUSDT,2026-02-05,BTCUSDT_00001271,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-05,BTCUSDT_00001467,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-05,BTCUSDT_00001531,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
-BTCUSDT,2026-02-05,BTCUSDT_00001555,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
-BTCUSDT,2026-02-05,BTCUSDT_00004331,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
-BTCUSDT,2026-02-05,BTCUSDT_00004983,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-06,BTCUSDT_00000281,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-06,BTCUSDT_00000464,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-06,BTCUSDT_00002299,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-06,BTCUSDT_00002315,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-25,BTCUSDT_00001502,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-25,BTCUSDT_00001536,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-25,BTCUSDT_00002082,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-25,BTCUSDT_00002435,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
+BTCUSDT,2026-02-19,BTCUSDT_00005045,manager_consolidation,manager_id activity: large notional after multiple small legs
 BTCUSDT,2026-01-01,BTCUSDT_00003195,threshold_testing,Probe-sized trade near 10k USDT with companion sub-threshold notionals
 BTCUSDT,2026-01-04,BTCUSDT_00000504,threshold_testing,Probe-sized trade near 10k USDT with companion sub-threshold notionals
 DOGEUSDT,2026-02-02,DOGEUSDT_00000076,chain_layering,Three distinct wallets sequential SELL similar qty within 15m
@@ -18,43 +24,49 @@ BATUSDT,2026-01-21,BATUSDT_00000061,aml_structuring,BATUSDT hourly notional 16 v
 BATUSDT,2026-01-21,BATUSDT_00000136,aml_structuring,BATUSDT hourly notional 16 vs median (52.0x)
 BATUSDT,2026-01-21,BATUSDT_00000289,aml_structuring,BATUSDT hourly notional 16 vs median (51.9x)
 BATUSDT,2026-01-21,BATUSDT_00000397,aml_structuring,BATUSDT hourly notional 16 vs median (51.9x)
-BATUSDT,2026-01-21,BATUSDT_00000449,aml_structuring,BATUSDT hourly notional 17 vs median (55.0x)
-BATUSDT,2026-01-21,BATUSDT_00000492,aml_structuring,BATUSDT hourly notional 16 vs median (52.0x)
-BATUSDT,2026-01-21,BATUSDT_00000499,aml_structuring,BATUSDT hourly notional 16 vs median (51.9x)
-BATUSDT,2026-01-21,BATUSDT_00000503,aml_structuring,BATUSDT hourly notional 17 vs median (56.3x)
-BATUSDT,2026-01-21,BATUSDT_00000504,aml_structuring,BATUSDT hourly notional 50 vs median (162.6x)
-BATUSDT,2026-01-21,BATUSDT_00000505,aml_structuring,BATUSDT hourly notional 50 vs median (162.6x)
-BATUSDT,2026-01-21,BATUSDT_00000506,aml_structuring,BATUSDT hourly notional 50 vs median (162.6x)
-BATUSDT,2026-01-21,BATUSDT_00000507,aml_structuring,BATUSDT hourly notional 16 vs median (51.9x)
-BATUSDT,2026-01-21,BATUSDT_00000508,aml_structuring,BATUSDT hourly notional 17 vs median (55.0x)
-BATUSDT,2026-01-21,BATUSDT_00000509,aml_structuring,BATUSDT hourly notional 16 vs median (52.0x)
 BATUSDT,2026-02-09,BATUSDT_00000013,aml_structuring,BATUSDT hourly notional 12 vs median (98.3x)
 BATUSDT,2026-02-09,BATUSDT_00000403,aml_structuring,BATUSDT hourly notional 12 vs median (98.3x)
 BATUSDT,2026-02-09,BATUSDT_00000520,aml_structuring,BATUSDT hourly notional 12 vs median (105.4x)
 BATUSDT,2026-02-09,BATUSDT_00000521,aml_structuring,BATUSDT hourly notional 11 vs median (94.5x)
-BATUSDT,2026-02-09,BATUSDT_00000522,aml_structuring,BATUSDT hourly notional 33 vs median (279.2x)
-BATUSDT,2026-02-09,BATUSDT_00000523,aml_structuring,BATUSDT hourly notional 33 vs median (279.2x)
-BATUSDT,2026-02-09,BATUSDT_00000524,aml_structuring,BATUSDT hourly notional 33 vs median (279.2x)
-BATUSDT,2026-02-09,BATUSDT_00000525,aml_structuring,BATUSDT hourly notional 12 vs median (98.3x)
 BATUSDT,2026-02-16,BATUSDT_00000526,aml_structuring,BATUSDT hourly notional 100 vs median (198.2x)
 BATUSDT,2026-02-16,BATUSDT_00000527,aml_structuring,BATUSDT hourly notional 100 vs median (198.2x)
+BTCUSDT,2026-02-04,BTCUSDT_00003976,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
+ETHUSDT,2026-01-20,ETHUSDT_00003682,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
+ETHUSDT,2026-01-20,ETHUSDT_00003687,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
+ETHUSDT,2026-02-16,ETHUSDT_00001545,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
 BTCUSDT,2026-01-04,BTCUSDT_00000019,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-01-04,BTCUSDT_00002820,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-05,BTCUSDT_00002996,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-05,BTCUSDT_00003115,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-21,BTCUSDT_00003222,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-21,BTCUSDT_00003726,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-22,BTCUSDT_00000716,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-22,BTCUSDT_00003910,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-23,BTCUSDT_00001942,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-01-23,BTCUSDT_00002257,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-01,BTCUSDT_00004052,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-01,BTCUSDT_00004214,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-03,BTCUSDT_00000426,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-03,BTCUSDT_00000622,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-04,BTCUSDT_00001264,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-04,BTCUSDT_00001533,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-10,BTCUSDT_00001547,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-10,BTCUSDT_00001628,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-11,BTCUSDT_00001020,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-11,BTCUSDT_00003246,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-01-30,BTCUSDT_00001503,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
 BTCUSDT,2026-01-30,BTCUSDT_00002086,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
-BTCUSDT,2026-01-30,BTCUSDT_00004574,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
+BTCUSDT,2026-02-06,BTCUSDT_00002210,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
+BTCUSDT,2026-02-06,BTCUSDT_00002250,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
+BTCUSDT,2026-02-24,BTCUSDT_00000785,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
+BTCUSDT,2026-02-24,BTCUSDT_00003896,coordinated_pump,>=3 wallets BUY same minute; agg>=15k USDT; 1m bar tradecount elevated
 DOGEUSDT,2026-02-03,DOGEUSDT_00001490,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
 DOGEUSDT,2026-02-03,DOGEUSDT_00001805,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
 XRPUSDT,2026-02-05,XRPUSDT_00002096,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
+XRPUSDT,2026-02-06,XRPUSDT_00001050,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
+XRPUSDT,2026-02-15,XRPUSDT_00002291,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
 BATUSDT,2026-01-19,BATUSDT_00000380,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 DOGEUSDT,2026-01-02,DOGEUSDT_00000399,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-DOGEUSDT,2026-01-02,DOGEUSDT_00000785,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 LTCUSDT,2026-01-19,LTCUSDT_00000502,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-LTCUSDT,2026-01-19,LTCUSDT_00000740,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 SOLUSDT,2026-02-06,SOLUSDT_00000117,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-SOLUSDT,2026-02-06,SOLUSDT_00002170,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 XRPUSDT,2026-01-31,XRPUSDT_00000888,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-DOGEUSDT,2026-01-02,DOGEUSDT_00000082,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-LTCUSDT,2026-01-12,LTCUSDT_00000858,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-01-08,SOLUSDT_00000714,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-XRPUSDT,2026-02-06,XRPUSDT_00000779,spoofing,XRPUSDT IF EOD outlier (qty_z > 4.5 gate)

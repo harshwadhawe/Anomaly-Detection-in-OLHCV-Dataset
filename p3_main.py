@@ -13,12 +13,10 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import IsolationForest
-
 from p3_utils import (
-    AML_STRUCT_BAND_HI, AML_STRUCT_BAND_LO, BTC_ETH_IF_TOP_K, COORD_MIN_AGG_NOTIONAL, COORD_MIN_WALLETS,
-    COORD_TOP_N_PER_MINUTE, CROSS_TOP_N_PER_HOT_MINUTE, DEFAULT_MAX_SUBMISSION_ROWS, Flag, IF_CONTAMINATION,
-    IF_TOP_K_PER_SYMBOL, PUMP_TOP_N_PER_HOT_MINUTE, ROOT, ROUND_TRIP_MAX_REL_SPREAD, ROUND_TRIP_MAX_UNIQUE_TRADES,
+    AML_STRUCT_BAND_HI, AML_STRUCT_BAND_LO, COORD_MIN_AGG_NOTIONAL, COORD_MIN_WALLETS,
+    COORD_TOP_N_PER_MINUTE, CROSS_TOP_N_PER_HOT_MINUTE, DEFAULT_MAX_SUBMISSION_ROWS, Flag,
+    PUMP_TOP_N_PER_HOT_MINUTE, ROOT, ROUND_TRIP_MAX_REL_SPREAD, ROUND_TRIP_MAX_UNIQUE_TRADES,
     ROUND_TRIP_MIN_NOTIONAL_PAIR, SYMBOLS, StepTiming, attach_bar_features, configure_logging, load_market_frames,
     load_trades_all, log_data_snapshot, log_detector_counts, log_pipeline, log_submission_accuracy_review,
     merge_flags, run_timed, trim_submission,
@@ -75,7 +73,7 @@ def detect_wash_same_wallet(trades: pd.DataFrame) -> list[Flag]:
             roll_gross = abss.rolling("8min", min_periods=2).sum()
             roll_buy = (g["side"] == "BUY").astype(float).rolling("8min", min_periods=2).sum()
             roll_sell = (g["side"] == "SELL").astype(float).rolling("8min", min_periods=2).sum()
-            mask = ((roll_gross > 1200.0) & (roll_net.abs() < 0.10 * roll_gross) & (roll_buy >= 1) & (roll_sell >= 1))
+            mask = ((roll_gross > 500.0) & (roll_net.abs() < 0.22 * roll_gross) & (roll_buy >= 1) & (roll_sell >= 1))
             hit = g[mask.fillna(False)].reset_index()
             for _, r in hit.iterrows():
                 out.append(Flag(sym, r["date"], r["trade_id"], "wash_trading", "8m rolling net USDT near zero vs gross; both sides; same wallet"))
@@ -184,8 +182,8 @@ def detect_manager_consolidation(trades: pd.DataFrame) -> list[Flag]:
         g = g.sort_values("timestamp")
         ts, n, tid, dates = g["timestamp"].values, g["notional"].astype(float).values, g["trade_id"].values, g["date"].values
         for i in range(len(g)):
-            if n[i] < 25_000.0: continue
-            prev = g.loc[(g["timestamp"] < ts[i]) & (g["timestamp"] >= ts[i] - pd.Timedelta("72h"))]
+            if n[i] < 20_000.0: continue
+            prev = g.loc[g["timestamp"] < ts[i]]
             if (prev["notional"].astype(float) < 9_000.0).sum() >= 6:
                 out.append(Flag(str(sym), str(dates[i]), str(tid[i]), "manager_consolidation", "manager_id activity: large notional after multiple small legs"))
     return out
@@ -364,64 +362,6 @@ def detect_chain_layering(trades: pd.DataFrame) -> list[Flag]:
             for k in range(3): out.append(Flag(sym, str(dates[i + k]), str(tid[i + k]), "chain_layering", "Three distinct wallets sequential SELL similar qty within 15m"))
     return out
 
-def detect_isolation_forest(trades_feat: pd.DataFrame) -> list[Flag]:
-    out: list[Flag] = []
-    for sym in ["SOLUSDT", "DOGEUSDT", "LTCUSDT"]:
-        sub = trades_feat[trades_feat["symbol"] == sym].copy()
-        if len(sub) < 40: continue
-        sub["qty_z"] = sub.groupby("date")["quantity"].transform(lambda x: (x - x.mean()) / (x.std() + 1e-9))
-        sub["wallet_day_ct"] = sub.groupby(["wallet", "date"])["trade_id"].transform("count")
-        X = sub[["qty_z", "dev_from_mid", "wallet_day_ct", "notional"]].replace([np.inf, -np.inf], np.nan).fillna(0.0).values
-        iso = IsolationForest(n_estimators=200, contamination=IF_CONTAMINATION, random_state=42, n_jobs=-1)
-        pred, scores = iso.fit_predict(X), iso.score_samples(X)
-        sub = sub.assign(_if_score=scores)
-        
-        # GATE: Must be an IF outlier AND structurally massive (> 3.0 standard deviations)
-        take = sub[(pred == -1) & (sub['qty_z'] > 4.5)]
-        if len(take) > IF_TOP_K_PER_SYMBOL: take = take.nsmallest(IF_TOP_K_PER_SYMBOL, "_if_score")
-        for _, r in take.iterrows(): out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "IsolationForest outlier (qty_z > 4.5 gate)"))
-    return out
-
-def detect_xrp_eod_if(trades_feat: pd.DataFrame) -> list[Flag]:
-    sym = "XRPUSDT"
-    sub = trades_feat[trades_feat["symbol"] == sym].copy()
-    h = sub["timestamp"].dt.hour
-    sub = sub.loc[(h == 23) | (h == 0)].copy()
-    if len(sub) < 12: return []
-    sub["qty_z"] = sub.groupby("date")["quantity"].transform(lambda x: (x - x.mean()) / (x.std() + 1e-9))
-    sub["wallet_day_ct"] = sub.groupby(["wallet", "date"])["trade_id"].transform("count")
-    X = sub[["qty_z", "dev_from_mid", "wallet_day_ct", "notional"]].replace([np.inf, -np.inf], np.nan).fillna(0.0).values
-    iso = IsolationForest(n_estimators=200, contamination=IF_CONTAMINATION, random_state=44, n_jobs=-1)
-    pred, scores = iso.fit_predict(X), iso.score_samples(X)
-    sub = sub.assign(_if_score=scores)
-    
-    take = sub[(pred == -1) & (sub['qty_z'] > 4.5)]
-    if len(take) > 10: take = take.nsmallest(10, "_if_score")
-    
-    # MINIMAL FIX: Initialize 'out' before appending to it
-    out: list[Flag] = []
-    
-    for _, r in take.iterrows(): 
-        out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "XRPUSDT IF EOD outlier (qty_z > 4.5 gate)"))
-    return out
-    
-def detect_btc_eth_intraday_if(trades_feat: pd.DataFrame) -> list[Flag]:
-    out: list[Flag] = []
-    for sym in ["BTCUSDT", "ETHUSDT"]:
-        sub = trades_feat[trades_feat["symbol"] == sym].copy()
-        if len(sub) < 50: continue
-        sub["hod"] = sub["timestamp"].dt.hour
-        sub["qty_zh"] = sub.groupby(["date", "hod"])["quantity"].transform(lambda x: (x - x.mean()) / (x.std() + 1e-9))
-        X = sub[["qty_zh", "dev_from_mid", "notional"]].replace([np.inf, -np.inf], np.nan).fillna(0.0).values
-        iso = IsolationForest(n_estimators=250, contamination=IF_CONTAMINATION, random_state=7, n_jobs=-1)
-        pred, scores = iso.fit_predict(X), iso.score_samples(X)
-        sub = sub.assign(_if_score=scores)
-        
-        # GATE: Must be an IF outlier AND structurally massive (> 3.0 standard deviations)
-        take = sub[(pred == -1) & (sub['qty_zh'] > 4.5)]
-        if len(take) > BTC_ETH_IF_TOP_K: take = take.nsmallest(BTC_ETH_IF_TOP_K, "_if_score")
-        for _, r in take.iterrows(): out.append(Flag(sym, r["date"], r["trade_id"], "spoofing", "BTC/ETH intraday IF outlier (qty_zh > 4.5 gate)"))
-    return out
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Problem 3: build submission.csv from student-pack crypto CSVs.")
@@ -465,9 +405,6 @@ def main() -> None:
     flags_layer = run_timed("detect_layering_echo", detect_layering_echo, perf, trades)
     flags_pump = run_timed("detect_pump_dump", detect_pump_dump, perf, trades, market)
     flags_cross = run_timed("detect_cross_pair_divergence", detect_cross_pair_divergence, perf, trades, market)
-    flags_if = run_timed("detect_isolation_forest", detect_isolation_forest, perf, trades_f)
-    flags_xrp_eod = run_timed("detect_xrp_eod_if", detect_xrp_eod_if, perf, trades_f)
-    flags_be = run_timed("detect_btc_eth_intraday_if", detect_btc_eth_intraday_if, perf, trades_f)
 
     flag_lists_named: list[tuple[str, list[Flag]]] = [
         ("peg_usdc", flags_peg), ("usdc_wash_volume_at_peg", flags_wash_peg),
@@ -476,7 +413,6 @@ def main() -> None:
         ("batusdt_hourly", flags_bat), ("aml_structuring", flags_aml), ("wash_same_wallet", flags_wash),
         ("round_trip", flags_rt), ("coordinated_pump", flags_coord), ("ramping", flags_ramp),
         ("layering_echo", flags_layer), ("pump_dump", flags_pump), ("cross_pair", flags_cross),
-        ("isolation_forest", flags_if), ("xrp_eod_if", flags_xrp_eod), ("btc_eth_if", flags_be),
     ]
 
     raw_total = sum(len(fl) for _, fl in flag_lists_named)

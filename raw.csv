@@ -53,6 +53,7 @@ BTCUSDT,2026-02-03,BTCUSDT_00002860,round_trip_wash,Greedy high-notional recipro
 BTCUSDT,2026-02-03,BTCUSDT_00003035,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-02-04,BTCUSDT_00001264,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-02-04,BTCUSDT_00001533,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-04,BTCUSDT_00003976,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
 BTCUSDT,2026-02-05,BTCUSDT_00000735,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-05,BTCUSDT_00001271,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-05,BTCUSDT_00001467,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
@@ -82,6 +83,7 @@ BTCUSDT,2026-02-18,BTCUSDT_00000533,round_trip_wash,Greedy high-notional recipro
 BTCUSDT,2026-02-18,BTCUSDT_00002166,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-02-18,BTCUSDT_00002239,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-02-18,BTCUSDT_00002364,round_trip_wash,Greedy high-notional reciprocal pair within 5m
+BTCUSDT,2026-02-19,BTCUSDT_00005045,manager_consolidation,manager_id activity: large notional after multiple small legs
 BTCUSDT,2026-02-23,BTCUSDT_00001243,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-02-23,BTCUSDT_00001647,round_trip_wash,Greedy high-notional reciprocal pair within 5m
 BTCUSDT,2026-02-23,BTCUSDT_00001979,round_trip_wash,Greedy high-notional reciprocal pair within 5m
@@ -95,56 +97,29 @@ BTCUSDT,2026-02-25,BTCUSDT_00002082,coordinated_structuring,≥3 wallets and ≥
 BTCUSDT,2026-02-25,BTCUSDT_00002435,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-25,BTCUSDT_00003634,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-25,BTCUSDT_00004390,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
-DOGEUSDT,2026-01-02,DOGEUSDT_00000082,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 DOGEUSDT,2026-01-02,DOGEUSDT_00000399,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 DOGEUSDT,2026-01-02,DOGEUSDT_00000785,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-DOGEUSDT,2026-01-05,DOGEUSDT_00000264,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-01-06,DOGEUSDT_00001001,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-01-07,DOGEUSDT_00001727,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-01-08,DOGEUSDT_00000140,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 DOGEUSDT,2026-01-19,DOGEUSDT_00000115,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 DOGEUSDT,2026-01-19,DOGEUSDT_00000652,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-DOGEUSDT,2026-01-21,DOGEUSDT_00000281,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 DOGEUSDT,2026-01-31,DOGEUSDT_00000214,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 DOGEUSDT,2026-02-02,DOGEUSDT_00000076,chain_layering,Three distinct wallets sequential SELL similar qty within 15m
 DOGEUSDT,2026-02-02,DOGEUSDT_00000668,chain_layering,Three distinct wallets sequential SELL similar qty within 15m
 DOGEUSDT,2026-02-02,DOGEUSDT_00001361,chain_layering,Three distinct wallets sequential SELL similar qty within 15m
 DOGEUSDT,2026-02-03,DOGEUSDT_00001490,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
 DOGEUSDT,2026-02-03,DOGEUSDT_00001805,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
-DOGEUSDT,2026-02-05,DOGEUSDT_00000790,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-02-05,DOGEUSDT_00000987,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-02-06,DOGEUSDT_00000224,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-02-06,DOGEUSDT_00001027,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-02-11,DOGEUSDT_00001786,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-DOGEUSDT,2026-02-25,DOGEUSDT_00000926,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-LTCUSDT,2026-01-12,LTCUSDT_00000858,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-LTCUSDT,2026-01-15,LTCUSDT_00000181,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-LTCUSDT,2026-01-19,LTCUSDT_00000328,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
+ETHUSDT,2026-01-20,ETHUSDT_00003682,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
+ETHUSDT,2026-01-20,ETHUSDT_00003687,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
+ETHUSDT,2026-02-16,ETHUSDT_00001545,wash_trading,8m rolling net USDT near zero vs gross; both sides; same wallet
 LTCUSDT,2026-01-19,LTCUSDT_00000502,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 LTCUSDT,2026-01-19,LTCUSDT_00000740,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-LTCUSDT,2026-02-06,LTCUSDT_00000341,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 LTCUSDT,2026-02-06,LTCUSDT_00001101,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 LTCUSDT,2026-02-06,LTCUSDT_00001164,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-LTCUSDT,2026-02-15,LTCUSDT_00000700,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-01-08,SOLUSDT_00000714,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-01-12,SOLUSDT_00001471,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-01-15,SOLUSDT_00000552,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-01-25,SOLUSDT_00001359,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-01-31,SOLUSDT_00002234,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-02-01,SOLUSDT_00001436,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-02-02,SOLUSDT_00001438,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-02-04,SOLUSDT_00002188,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-02-05,SOLUSDT_00001888,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 SOLUSDT,2026-02-06,SOLUSDT_00000117,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-SOLUSDT,2026-02-06,SOLUSDT_00001153,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 SOLUSDT,2026-02-06,SOLUSDT_00002170,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
-SOLUSDT,2026-02-11,SOLUSDT_00000126,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
-SOLUSDT,2026-02-23,SOLUSDT_00002166,spoofing,IsolationForest outlier (qty_z > 4.5 gate)
 USDCUSDT,2026-01-14,USDCUSDT_00001001,peg_break,abs(price-1.0) > 0.005 per Problem 3 peg-break rule
 USDCUSDT,2026-02-02,USDCUSDT_00001010,peg_break,abs(price-1.0) > 0.005 per Problem 3 peg-break rule
 USDCUSDT,2026-02-09,USDCUSDT_00001011,peg_break,abs(price-1.0) > 0.005 per Problem 3 peg-break rule
 XRPUSDT,2026-01-31,XRPUSDT_00000888,cross_pair_divergence,Top-notional trades in minute with >250 bps 1m divergence vs BTC
 XRPUSDT,2026-02-05,XRPUSDT_00002096,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
-XRPUSDT,2026-02-06,XRPUSDT_00000779,spoofing,XRPUSDT IF EOD outlier (qty_z > 4.5 gate)
 XRPUSDT,2026-02-06,XRPUSDT_00001050,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"
 XRPUSDT,2026-02-15,XRPUSDT_00002291,pump_and_dump,"Top-notional trades in severe OHLCV pump minute (>3.5% up, >3.0% reversal)"

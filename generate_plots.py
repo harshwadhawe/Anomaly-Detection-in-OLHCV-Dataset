@@ -102,7 +102,7 @@ def plot_p2_hero():
 def plot_p3_hero():
     """P3: Shows the beautiful distribution of the Risk Management Grid."""
     try:
-        sub = pd.read_csv(ROOT / "raw.csv")
+        sub = pd.read_csv(ROOT / "submission.csv")
         if sub.empty: return
         
         counts = sub['violation_type'].value_counts().reset_index()
