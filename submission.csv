@@ -9,38 +9,6 @@ BTCUSDT,2026-02-05,BTCUSDT_00001531,coordinated_structuring,≥3 wallets and ≥
 BTCUSDT,2026-02-05,BTCUSDT_00001555,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-05,BTCUSDT_00004331,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
 BTCUSDT,2026-02-05,BTCUSDT_00004983,coordinated_structuring,≥3 wallets and ≥6 trades in smurfing band same day
-ETHUSDT,2026-01-02,ETHUSDT_00000025,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00000096,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00000285,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00000324,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00000380,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001398,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001546,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001599,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001638,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001724,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001788,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00001866,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002015,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002122,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002146,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002299,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002323,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002346,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002531,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002567,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002677,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00002994,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003001,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003024,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003060,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003327,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003573,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003645,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003696,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003709,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003791,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
-ETHUSDT,2026-01-02,ETHUSDT_00003904,placement_smurfing,First-appearance trade on symbol; ≥20 wallets same day
 BTCUSDT,2026-01-01,BTCUSDT_00003195,threshold_testing,Probe-sized trade near 10k USDT with companion sub-threshold notionals
 BTCUSDT,2026-01-04,BTCUSDT_00000504,threshold_testing,Probe-sized trade near 10k USDT with companion sub-threshold notionals
 DOGEUSDT,2026-02-02,DOGEUSDT_00000076,chain_layering,Three distinct wallets sequential SELL similar qty within 15m

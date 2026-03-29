@@ -136,13 +136,34 @@ def detect_usdc_wash_volume_at_peg(trades: pd.DataFrame) -> list[Flag]:
     return out
 
 def detect_aml_structuring(trades: pd.DataFrame) -> list[Flag]:
+    out: list[Flag] = []
+    
+    # Isolate all trades that fall into the $9,200 - $9,999 smurfing band
     in_band = (trades["notional"] >= AML_STRUCT_BAND_LO) & (trades["notional"] <= AML_STRUCT_BAND_HI)
-    n_in_band = trades.assign(_in_band=in_band).groupby(["symbol", "wallet", "date"], sort=False)["_in_band"].transform("sum")
+    band_trades = trades[in_band].copy()
     
-    # STRICTER GATE: Raised from >= 2 to >= 4 to eliminate BTC/ETH natural noise
-    hit = trades.loc[in_band & (n_in_band >= 4), ["symbol", "date", "trade_id"]]
-    
-    return [Flag(str(sym), str(d), str(tid), "aml_structuring", "4+ trades with notional in smurfing band same wallet/day") for sym, d, tid in zip(hit["symbol"], hit["date"], hit["trade_id"])]
+    for (sym, w, day), g in band_trades.groupby(["symbol", "wallet", "date"]):
+        if len(g) >= 4:
+            # ANTI-BURN-IN GATE: Time-Density Check
+            # Are these 4+ trades clustered to split a large block, or just a 24h TWAP?
+            g = g.sort_values("timestamp")
+            best_count = 0
+            
+            for t0 in g["timestamp"]:
+                t1 = t0 + pd.Timedelta("4h")  # 4-hour structuring window
+                count = ((g["timestamp"] >= t0) & (g["timestamp"] <= t1)).sum()
+                if count > best_count:
+                    best_count = count
+                    
+            # Only flag if 4+ trades happened within the exact same 4h block
+            if best_count >= 4:
+                for _, r in g.iterrows():
+                    out.append(Flag(
+                        str(sym), str(day), str(r["trade_id"]), 
+                        "aml_structuring", 
+                        f"Structuring ring: {best_count} trades in 9.2k-10k band within 4h window"
+                    ))
+    return out
 
 def detect_coordinated_structuring(trades: pd.DataFrame) -> list[Flag]:
     in_band = (trades["notional"] >= AML_STRUCT_BAND_LO) & (trades["notional"] <= AML_STRUCT_BAND_HI)
@@ -171,11 +192,30 @@ def detect_placement_smurfing(trades: pd.DataFrame) -> list[Flag]:
     t = trades.sort_values("timestamp")
     first = t.groupby(["symbol", "wallet"], sort=False).head(1)
     first = first[(first["notional"] >= 400.0) & (first["notional"] <= 3_500.0)]
-    cnt = first.groupby(["symbol", "date"]).size()
+    
     out: list[Flag] = []
-    for sym, day in cnt[cnt >= 20].index:
-        for _, r in first[(first["symbol"] == sym) & (first["date"] == day)].iterrows():
-            out.append(Flag(str(sym), str(day), str(r["trade_id"]), "placement_smurfing", "First-appearance trade on symbol; ≥20 wallets same day"))
+    for (sym, day), g in first.groupby(["symbol", "date"]):
+        if len(g) >= 20:
+            # ANTI-BURN-IN GATE: Enforce time-density
+            # If it's a natural day, trades are spread over 24h. 
+            # If it's a coordinated ring, they will cluster in a short window.
+            g = g.sort_values("timestamp")
+            best_count = 0
+            
+            for t0 in g["timestamp"]:
+                t1 = t0 + pd.Timedelta("4h")
+                count = ((g["timestamp"] >= t0) & (g["timestamp"] <= t1)).sum()
+                if count > best_count:
+                    best_count = count
+                    
+            # Only flag if >= 15 wallets executed their first trade within the SAME 4-hour window
+            if best_count >= 15:
+                for _, r in g.iterrows():
+                    out.append(Flag(
+                        str(sym), str(day), str(r["trade_id"]), 
+                        "placement_smurfing", 
+                        f"Coordinated placement ring: {len(g)} new wallets today, {best_count} within 4h window"
+                    ))
     return out
 
 def detect_ramping(trades: pd.DataFrame) -> list[Flag]:
